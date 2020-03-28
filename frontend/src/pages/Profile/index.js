@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FiPower, FiTrash } from 'react-icons/fi';
 
+
+
 import './style.css';
 import logo from '../../assets/logo.svg';
 

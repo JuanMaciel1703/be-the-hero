@@ -1,11 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import api from '../../services/api';
 
 import './style.css';
 import logo from '../../assets/logo.svg';
 import { FiArrowLeft } from 'react-icons/fi';
+import { MagicSpinner } from "react-spinners-kit";
 
 export default function Register() {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [whatsapp, setWhatsApp] = useState('');
+    const [city, setCity] = useState('');
+    const [uf, setUf] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    async function handleRegister(e) {
+        e.preventDefault();
+        setLoading(true)
+
+        setTimeout(() => {  console.log("World!"); }, 2000);
+
+
+        const data = { name, email, password, whatsapp, city, uf };
+
+        try {
+            const response = await api.post('ongs', data);
+
+            alert('ONG cadastrada com sucesso!');
+        } catch (error) {
+            console.error(error)
+            alert(error)
+        } finally {
+            setLoading(false);
+        }
+    }
+
     return (
         <div className="register-container">
             <div className="content">
@@ -20,18 +51,46 @@ export default function Register() {
                     </Link>
                 </section>
                 
-                <form>
-                    <input placeholder="Nome da ONG"/>
-                    <input placeholder="Email" type="email"/>
-                    <input placeholder="WhatsApp" type="phone"/>
+                <form onSubmit={handleRegister}> 
+                    <input placeholder="Nome da ONG" 
+                        value={name}
+                        onChange={e => setName(e.target.value)} 
+                        required
+                    />
+                   
+                    <input placeholder="Email" type="email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)} 
+                        required
+                    />
+
+                    <input placeholder="Senha" type="password"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)} 
+                        required
+                    />
+                   
+                    <input placeholder="WhatsApp" type="phone"
+                        value={whatsapp}
+                        onChange={e => setWhatsApp(e.target.value)} 
+                        required
+                    />
 
                     <div className="input-group">
-                        <input placeholder="Cidade" />
-                        <input placeholder="UF" maxLength={2} style={{ width: 80 }}/>
+                        <input placeholder="Cidade"
+                            value={city}
+                            onChange={e => setCity(e.target.value)}  
+                            required
+                        />
+                        <input placeholder="UF" maxLength={2} style={{ width: 80 }}
+                            value={uf}
+                            onChange={e => setUf(e.target.value)} 
+                            required
+                        />
                     </div>
 
                     <button className="button" type="submit">
-                        Cadastrar
+                        { loading ? <MagicSpinner size={40} color="#fff" loading={loading}/> : "Cadastrar"}
                     </button>
                 </form>
             </div>
