@@ -6,6 +6,8 @@ import { play, exit } from './lib/animation';
 
 import Logon from './pages/Logon';
 import SignUp from './pages/SignUp';
+import Profile from './pages/Profile';
+import NewIncident from './pages/NewIncident';
 
 export default function Routes() {
     return (
@@ -14,8 +16,6 @@ export default function Routes() {
                 <Route render={({ location }) => { 
                     const { pathname, key } = location;
                     
-                    console.info(key)
-
                     return (
                         <TransitionGroup component={null}>
                             <Transition
@@ -26,9 +26,11 @@ export default function Routes() {
                                 timeout={{ enter: 750, exit: 0 }}
                             >
                                 <Switch location={location}>
-                                    <Route path="/" exact component={Logon}/>
+                                    <Route path="/" exact component={Profile}/>
                                     <Route path="/login" component={Logon}/>
                                     <Route path="/signup" component={SignUp}/>
+                                    <Route path="/profile" component={Profile}/>
+                                    <Route path="/incident/new" component={NewIncident}/>
                                 </Switch>
                             </Transition>
                         </TransitionGroup>
