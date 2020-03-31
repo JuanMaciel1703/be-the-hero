@@ -11,9 +11,11 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-icons": "^3.9.0",
+    "react-infinite-scroll-component": "^5.0.4",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "react-spinners-kit": "^1.9.1",
+    "react-toastify": "^5.5.0",
     "react-transition-group": "^4.3.0"
   },
   "scripts": {
