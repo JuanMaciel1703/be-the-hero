@@ -6,6 +6,7 @@ import './style.css';
 import logo from '../../assets/logo.svg';
 import { FiArrowLeft } from 'react-icons/fi';
 import { MagicSpinner } from "react-spinners-kit";
+import Notification from '../../components/common/Notification';
 
 export default function Register() {
     const [name, setName] = useState('');
@@ -15,26 +16,47 @@ export default function Register() {
     const [city, setCity] = useState('');
     const [uf, setUf] = useState('');
     const [loading, setLoading] = useState(false);
+    const [notification, setNotification] = useState({ 
+        show: false, 
+        message: null,
+        type: 'success'
+    })
 
     async function handleRegister(e) {
         e.preventDefault();
         setLoading(true)
-
-        setTimeout(() => {  console.log("World!"); }, 2000);
-
-
+        
         const data = { name, email, password, whatsapp, city, uf };
 
         try {
             const response = await api.post('ongs', data);
 
-            alert('ONG cadastrada com sucesso!');
+            setNotification({
+                show: true,
+                message: 'ONG cadastrada com sucesso!',
+                type: 'success' 
+            })
+
+            setName('');
+            setEmail('');
+            setPassword('');
+            setWhatsApp('');
+            setCity('');
+            setUf('');
         } catch (error) {
-            console.error(error)
-            alert(error)
+            setNotification({
+                show: true,
+                message: 'Houve um erro ao tentar criar a ONG.',
+                type: 'error' 
+            })
         } finally {
             setLoading(false);
         }
+    }
+
+
+    function handleCloseNotification() {
+        setNotification({ show: false, message: null, type: 'success' });
     }
 
     return (
@@ -94,6 +116,12 @@ export default function Register() {
                     </button>
                 </form>
             </div>
+            <Notification 
+                show={notification.show} 
+                message={notification.message}
+                type={notification.type}
+                onClose={handleCloseNotification}
+            />
         </div>
     )
 }
