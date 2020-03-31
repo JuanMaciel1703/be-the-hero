@@ -22,7 +22,7 @@ const AuthController = {
             }
 
             if (ong.token) {
-                return res.json(token);
+                return res.json(ong);
             }
 
             const token = jwt.sign({ id: ong.id }, process.env.JWT_SECRET);
@@ -30,7 +30,7 @@ const AuthController = {
             await connection('ongs').update('token', token)
                 .where('id', ong.id);
                 
-            return res.json(token)
+            return res.json({ ...ong, token })
         } catch (error) {
             console.error(error);
             return res.status(500).json("Houve um erro ao realizar o login.");    

@@ -24,6 +24,6 @@ routes.post('/incidents', authMiddleware, IncidentController.create);
 routes.delete('/incidents/:id', authMiddleware, IncidentController.delete);
 
 // PROFILE ROUTES
-routes.get('/profile', ProfileController.index);
+routes.get('/profile', authMiddleware, ProfileController.index);
 
 module.exports = routes;
